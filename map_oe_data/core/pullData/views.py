@@ -14,7 +14,7 @@ class MapDataPull(generics.ListAPIView):
         patient_id = kwargs.get("patient_id")
         session_id = kwargs.get("session_id")
         module_name = kwargs.get("module_name")
-        fullpath = os.path.join(settings.MAP_DATA_URL, str(patient_id), session_id, module_name)
+        fullpath = os.path.join(settings.MAP_DATA_URL, "edb", str(patient_id), session_id, module_name)
         res = requests.get(fullpath, verify=False)
         return Response(res.json(), status=status.HTTP_200_OK)
 
