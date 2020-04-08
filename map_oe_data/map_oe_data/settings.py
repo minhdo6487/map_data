@@ -11,6 +11,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def get_env(variable_name, default=None):
+    value = os.getenv(variable_name)
+    if value is None:
+        if default:
+            return default
+        else:
+            raise ValueError(f"{variable_name} is not presented in environment variables. Check your .env file")
+    if str(value).lower() in ("true", "false"):
+        return str(value).lower() == "true"
+    return value
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -118,3 +133,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MAP_DATA_URL = get_env("MAP_DATA_URL")
